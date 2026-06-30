@@ -1,6 +1,7 @@
 # iec104_test_client
 
-A console client for testing IEC 60870-5-104 servers. It connects to a server, sends a General Interrogation command, and prints all incoming ASDUs to stdout in a human-readable format. Useful for verifying that a server publishes the correct data objects with the expected values and quality flags.
+A console client for testing IEC 60870-5-104 servers. It connects to a server, sends a General Interrogation command, and prints all incoming ASDUs to stdout in a human-readable format. 
+Useful for verifying that a server publishes the correct data objects with the expected values and quality flags.
 
 ## Supported ASDU types
 
