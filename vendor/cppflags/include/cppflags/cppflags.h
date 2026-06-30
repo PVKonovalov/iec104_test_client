@@ -36,6 +36,11 @@ namespace cppflags {
 
     class FlagSet {
     public:
+        // Set a preamble line printed before the flags list in the usage output.
+        void SetPreamble(const std::string &preamble) {
+            preamble_ = preamble;
+        }
+
         // Register an int flag with a default value and description.
         void Int(const std::string &name, int *target, int defaultValue, const std::string &description) {
             *target = defaultValue;
@@ -156,6 +161,8 @@ namespace cppflags {
         };
 
         void printHelp(const char *prog) const {
+            if (!preamble_.empty())
+                std::cout << preamble_ << "\n\n";
             std::cout << "Usage: " << prog << " [flags]\n\nFlags:\n";
             for (const auto &e: stringEntries_) {
                 std::cout << "  --" << e.name << " <string>"
@@ -174,6 +181,7 @@ namespace cppflags {
             std::cout << "  --help\n      Show this help message\n";
         }
 
+        std::string preamble_;
         std::vector<IntEntry> intEntries_;
         std::vector<BoolEntry> boolEntries_;
         std::vector<StringEntry> stringEntries_;

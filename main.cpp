@@ -35,6 +35,8 @@
 #endif
 #include "src/Context/Context.h"
 
+static constexpr auto VERSION = "1.0.0";
+
 void working(const char *hostname, int tcpPort);
 
 static std::mutex mtx;
@@ -419,9 +421,13 @@ int main(const int argc, char **argv) {
     int apci_t2 = currentAPCIParameters.t2;
     int apci_t3 = currentAPCIParameters.t3;
 
+    bool showVersion = false;
+
     cppflags::FlagSet flags;
-    flags.String("host", &ip, "", "Server IP address");
-    flags.Int("port", &port, IEC_60870_5_104_DEFAULT_PORT, "TCP port to connect to");
+    flags.SetPreamble(std::string("iec104_test_client version ") + VERSION);
+    flags.Bool(  "version", &showVersion,                     "Print version and exit");
+    flags.String("host",    &ip,   "",                        "Server IP address");
+    flags.Int(   "port",    &port, IEC_60870_5_104_DEFAULT_PORT, "TCP port to connect to");
     flags.Int("ca", &ca, 1, "Common address (station)");
     flags.Int("ioa", &filterIoa, 0, "Show only this IOA (0 = all)");
     flags.Int("k", &apci_k, currentAPCIParameters.k, "APCI: max unacknowledged I-frames (k)");
@@ -437,6 +443,11 @@ int main(const int argc, char **argv) {
         fprintf(stderr, "Error: %s\n", e.what());
         flags.printUsage(argv[0]);
         return 1;
+    }
+
+    if (showVersion) {
+        printf("iec104_test_client version %s\n", VERSION);
+        return 0;
     }
 
     if (ip.empty()) {

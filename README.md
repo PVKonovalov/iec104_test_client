@@ -36,6 +36,7 @@ iec104_test_client --host <address> [OPTIONS]
 
 | Flag | Default | Description |
 |------|---------|-------------|
+| `--version` | | Print version and exit |
 | `--host` | *(required)* | Server IP address |
 | `--port` | 2404 | TCP port |
 | `--ca` | 1 | Common address (station address) |
